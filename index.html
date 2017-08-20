@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="app/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+
+    <link rel="stylesheet" href="app/css/set_4.css">
+    <style>
+        html,
+        body,
+        #app {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #panel {
+            height: 25%;
+        }
+
+        .keys {
+            height: 15%;
+        }
+
+        .row.keys .col-md-12 {
+            height: 100%;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="app/js/jquery-3.2.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="app/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="row" id="panel">
+            <div class="col-md-12 panel">
+            </div>
+        </div>
+        <div class="row keys">
+            <div class="col-md-12">
+                <btn button-caption="CE"></btn>
+                <btn button-caption="C"></btn>
+                <btn button-caption="DELETE"></btn>
+                <btn button-caption="/"></btn>
+            </div>
+        </div>
+        <div class="row keys">
+            <div class="col-md-12">
+                <btn button-caption="7"></btn>
+                <btn button-caption="8"></btn>
+                <btn button-caption="9"></btn>
+                <btn button-caption="*"></btn>
+            </div>
+        </div>
+        <div class="row keys">
+            <div class="col-md-12">
+                <btn button-caption="4"></btn>
+                <btn button-caption="5"></btn>
+                <btn button-caption="6"></btn>
+                <btn button-caption="-"></btn>
+            </div>
+        </div>
+        <div class="row keys">
+            <div class="col-md-12">
+                <btn button-caption="1"></btn>
+                <btn button-caption="2"></btn>
+                <btn button-caption="3"></btn>
+                <btn button-caption="+"></btn>
+            </div>
+        </div>
+        <div class="row keys">
+            <div class="col-md-12">
+                <btn button-caption="+/-"></btn>
+                <btn button-caption="0"></btn>
+                <btn button-caption="."></btn>
+                <btn button-caption="="></btn>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var btn = {
+        props: ['buttonCaption'],
+        template: '\
+            <div class="set_4_button4 raised hoverable" >\
+                <div class="anim"></div><span>{{buttonCaption}}</span>\
+            </div>\
+            '
+    }
+    var app = new Vue({
+        el: "#app",
+        components: {
+            'btn': btn
+        }
+
+    })
+</script>
+
+</html>
