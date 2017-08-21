@@ -6,17 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+    <title>Simple Calculator</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="app/css/bootstrap.min.css">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
+    
+   
 
 
     <link rel="stylesheet" href="app/css/set_4.css">
@@ -31,90 +26,139 @@
             overflow: hidden;
         }
 
-        #panel {
+        .el-row.panel {
             height: 25%;
         }
 
-        .keys {
+       .el-row {
             height: 15%;
         }
-
-        .row.keys .col-md-12 {
-            height: 100%;
-        }
     </style>
-    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+    <script src="app/js/vue.js"></script>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="app/js/jquery-3.2.1.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="app/js/bootstrap.min.js"></script>
+    
+    <!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
 </head>
 
 <body>
     <div id="app">
-        <div class="row" id="panel">
-            <div class="col-md-12 panel">
-            </div>
-        </div>
-        <div class="row keys">
-            <div class="col-md-12">
+       <screen-panel></screen-panel>
+        <el-row>
                 <btn button-caption="CE"></btn>
                 <btn button-caption="C"></btn>
                 <btn button-caption="DELETE"></btn>
                 <btn button-caption="/"></btn>
-            </div>
-        </div>
-        <div class="row keys">
-            <div class="col-md-12">
+        </el-row>
+        <el-row>
                 <btn button-caption="7"></btn>
                 <btn button-caption="8"></btn>
                 <btn button-caption="9"></btn>
                 <btn button-caption="*"></btn>
-            </div>
-        </div>
-        <div class="row keys">
-            <div class="col-md-12">
+        </el-row>
+        <el-row>
                 <btn button-caption="4"></btn>
                 <btn button-caption="5"></btn>
                 <btn button-caption="6"></btn>
                 <btn button-caption="-"></btn>
-            </div>
-        </div>
-        <div class="row keys">
-            <div class="col-md-12">
+        </el-row>
+        <el-row>
                 <btn button-caption="1"></btn>
                 <btn button-caption="2"></btn>
                 <btn button-caption="3"></btn>
                 <btn button-caption="+"></btn>
-            </div>
-        </div>
-        <div class="row keys">
-            <div class="col-md-12">
+        </el-row>
+        <el-row>
                 <btn button-caption="+/-"></btn>
                 <btn button-caption="0"></btn>
                 <btn button-caption="."></btn>
                 <btn button-caption="="></btn>
-            </div>
-        </div>
+        </el-row>
     </div>
 </body>
 <script>
-    var btn = {
+    var Event=new Vue();//事件绑定器，用于平行组件间通信
+    Vue.component("btn",{
         props: ['buttonCaption'],
-        template: '\
-            <div class="set_4_button4 raised hoverable" >\
-                <div class="anim"></div><span>{{buttonCaption}}</span>\
-            </div>\
-            '
-    }
+        template: `
+            <div @click="btnOnClick" class="set_4_button4 raised hoverable" >
+                <div class="anim"></div><span>{{buttonCaption}}</span>
+            </div>`,
+        methods:{
+            btnOnClick:function(){
+                Event.$emit('pushKey',this.buttonCaption)//触发事件
+            }
+        }
+        
+    })
+    Vue.component("screen-panel",{
+        template:`
+            <el-row class="panel">
+                <div style="height:30%">{{currentExpression}}</div>
+                <div style="height:70%">{{numberToPush}}</div>
+            </el-row>`,
+        data:function(){
+            return {
+                currentExpression:'',
+                numberToPush:'',
+                dotted:false,
+                needToRefresh:false
+            }
+        },
+        mounted:function(){
+            var me=this;
+            Event.$on("pushKey",function(data){//监听事件
+                if(me.needToRefresh){
+                    me.numberToPush='';
+                    me.currentExpression='';
+                    me.needToRefresh=false;
+                }
+                if(parseInt(data)||data=='0'||data=='.'){
+                    if(data=='.'){
+                        if(!me.dotted){
+                        me.dotted=true;
+                    }
+                        else {
+                            return;
+                        }
+                    }
+                    me.numberToPush+=data;
+                }
+                else if(data=="DELETE"){
+                    me.numberToPush=me.numberToPush.slice(0,-1);
+                    
+                }
+                else if (data=='C'){
+                    me.numberToPush="";
+                }
+                else if(data=='CE'){
+                    me.currentExpression="";
+                }
+                else if(data=='+'||data=='-'||data=='*'||data=="/"){
+                    if(me.numberToPush!=''){
+                        me.currentExpression+=me.numberToPush+data;
+                        me.numberToPush='';
+                        me.dotted=false;
+                    }
+                }
+                else if(data=='='){
+                    if(me.numberToPush!=''){
+                        me.currentExpression+=me.numberToPush;
+                        me.numberToPush='';
+                        me.dotted=false;
+                    }
+                    me.numberToPush=eval('('+me.currentExpression+')');
+                    me.needToRefresh=true;
+                }
+            })
+        }
+    })
     var app = new Vue({
         el: "#app",
-        components: {
-            'btn': btn
-        }
-
+        
     })
 </script>
 
