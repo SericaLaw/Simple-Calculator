@@ -1,8 +1,4 @@
-# Simple-Calculator
-
-
-
-## Intro
+##Intro
 
 
 
