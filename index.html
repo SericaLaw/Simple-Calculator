@@ -87,23 +87,46 @@
             <div @click="btnOnClick" class="set_4_button4 raised hoverable" >
                 <div class="anim"></div><span>{{buttonCaption}}</span>
             </div>`,
+        data:function(){
+            return{
+                allowed:true
+            }
+        },
         methods:{
             btnOnClick:function(){
-                Event.$emit('pushKey',this.buttonCaption)//触发事件
+                if(this.allowed){
+                    Event.$emit('pushKey',this.buttonCaption)//触发事件
+                }
             }
+        },
+        mounted:function(){
+            var me=this;
+            Event.$on("setDotStatus",function(data){
+                if(me.buttonCaption=='.'){
+                    me.allowed=data;
+                }
+            })
         }
         
     })
     Vue.component("screen-panel",{
         template:`
-            <el-row class="panel">
-                <div style="height:30%">{{currentExpression}}</div>
-                <div style="height:70%">{{numberToPush}}</div>
-            </el-row>`,
+        <el-row class="panel">
+            <div style="height:50%;text-align:right">
+               <div style="font-size:2em">
+                 {{currentExpression}}
+                </div>
+            </div>
+            <div style="height:50%;text-align:right;">
+                <div style="font-size:5em;">
+                    {{numberToPush}}
+                </div>
+             </div>
+        </el-row>`,
         data:function(){
             return {
                 currentExpression:'',
-                numberToPush:'',
+                numberToPush:'0',
                 dotted:false,
                 needToRefresh:false
             }
@@ -111,47 +134,63 @@
         mounted:function(){
             var me=this;
             Event.$on("pushKey",function(data){//监听事件
-                if(me.needToRefresh){
+
+                if(parseInt(data)||data=='0'){
+                    if(me.needToRefresh){
                     me.numberToPush='';
-                    me.currentExpression='';
+                    
                     me.needToRefresh=false;
+                    }
+                    me.numberToPush=parseFloat(me.numberToPush+=data);
                 }
-                if(parseInt(data)||data=='0'||data=='.'){
-                    if(data=='.'){
-                        if(!me.dotted){
-                        me.dotted=true;
-                    }
-                        else {
-                            return;
-                        }
-                    }
-                    me.numberToPush+=data;
+                else if(data=="."){
+               
+                        me.numberToPush+=data;
+                        Event.$emit("setDotStatus",false);
+                  
+                   
                 }
                 else if(data=="DELETE"){
                     me.numberToPush=me.numberToPush.slice(0,-1);
                     
                 }
                 else if (data=='C'){
-                    me.numberToPush="";
-                }
-                else if(data=='CE'){
                     me.currentExpression="";
                 }
+                else if(data=='CE'){
+                    me.numberToPush="0";
+                }
                 else if(data=='+'||data=='-'||data=='*'||data=="/"){
+
                     if(me.numberToPush!=''){
+                        console.log(me.numberToPush);
                         me.currentExpression+=me.numberToPush+data;
                         me.numberToPush='';
-                        me.dotted=false;
+                        Event.$emit("setDotStatus",true);
+                    }
+                    else{
+                        me.currentExpression=me.currentExpression.slice(0,-1)+data;
                     }
                 }
-                else if(data=='='){
-                    if(me.numberToPush!=''){
-                        me.currentExpression+=me.numberToPush;
-                        me.numberToPush='';
-                        me.dotted=false;
+                else if(data=='+/-'){
+                    if(!me.switched){
+                        me.numberToPush='-'+me.numberToPush;
+                           
                     }
+                    else{
+                        me.numberToPush=me.numberToPush.slice(1);                       
+                    }
+                    me.switched=!me.switched;
+                    me.numberToPush=parseFloat(me.numberToPush);
+                }
+                else if(data=='='){
+                    me.currentExpression+=me.numberToPush;                  
                     me.numberToPush=eval('('+me.currentExpression+')');
                     me.needToRefresh=true;
+                    console.log(me.numberToPush);
+                    me.currentExpression='';
+
+                    Event.$emit("setDotStatus",true);
                 }
             })
         }
