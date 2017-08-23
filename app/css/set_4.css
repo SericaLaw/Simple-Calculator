@@ -649,7 +649,7 @@
 
 /****** button 4 *******/
 
-.set_4_button4 {
+#standard.medium .set_4_button4 {
   position: relative;
   font-weight: 400;
   text-align: center;
@@ -658,7 +658,7 @@
   float:left;
   padding:0 25px;
   line-height: 100%;
-  animation:bounceIn  0.5s ease 0s 1 normal;
+
   overflow: hidden;
   position: relative;
   z-index: 0;
@@ -667,6 +667,26 @@
 
 
 }
+#standard.large .set_4_button4,
+#scientific.medium .set_4_button4 {
+  position: relative;
+  font-weight: 400;
+  text-align: center;
+  width: 20%;
+  height: 100%;
+  float:left;
+  padding:0 25px;
+  line-height: 100%;
+
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+  color:#252b2d;
+
+
+}
+
 .set_4_button4 span{
   position: absolute;
   top:50%;

@@ -26,7 +26,7 @@
             overflow: hidden;
             position:relative;
         }
-        #main{
+        #standard,#scientific{
             height: 90%;
             width: 100%;
             padding: 0;
@@ -34,13 +34,34 @@
             overflow: hidden;
             position:absolute;
             bottom: 0;
+           
         }
-        #main .el-row.panel {
-            height: 25%;
+        .keys{
+            animation:bounceIn  0.5s ease 0s 1 normal;
+        }
+        #standard.medium .el-row.panel,
+        #scientific.medium .el-row.panel {
+            height: 16%;
+        }
+        
+        #standard.medium .keys,
+        #scientific.medium .keys{
+            height:84%;
+        }
+       #standard.medium .el-row,
+       #scientific.medium .el-row{
+            height: 16.66667%;
         }
 
-       #main .el-row {
-            height: 15%;
+        #standard.large .keys{
+            height:80%;
+        }
+        #standard.large .el-row.panel {
+            height:20%;
+        
+        }
+        #standard.large .el-row{
+            height:20%;
         }
     </style>
     <script src="app/js/vue.js"></script>
@@ -68,45 +89,242 @@
     </div>
 </body>
 <template id="tpl_Standard">
-<div id="main">
-        <screen-panel></screen-panel>
-    <el-row>
-            <btn button-caption="CE"></btn>
-            <btn button-caption="C"></btn>
-            <btn button-caption="DELETE"></btn>
-            <btn button-caption="/"></btn>
-    </el-row>
-    <el-row>
-            <btn button-caption="7"></btn>
-            <btn button-caption="8"></btn>
-            <btn button-caption="9"></btn>
-            <btn button-caption="*"></btn>
-    </el-row>
-    <el-row>
-            <btn button-caption="4"></btn>
-            <btn button-caption="5"></btn>
-            <btn button-caption="6"></btn>
-            <btn button-caption="-"></btn>
-    </el-row>
-    <el-row>
-            <btn button-caption="1"></btn>
-            <btn button-caption="2"></btn>
-            <btn button-caption="3"></btn>
-            <btn button-caption="+"></btn>
-    </el-row>
-    <el-row>
-            <btn button-caption="+/-"></btn>
-            <btn button-caption="0"></btn>
-            <btn button-caption="."></btn>
-            <btn button-caption="="></btn>
-    </el-row>
-       </div>
-    </template>
+    <div id="standard" :class="[{medium:isMedium},{large:isLarge}]">
+         <screen-panel></screen-panel>
+         <div class="keys">
+            <template v-if="layout =='medium'">
+            
+            
+                <el-row>
+                    <btn button-caption="%"></btn>
+                    <btn button-caption="√"></btn>
+                    <btn button-caption="x^2"></btn>
+                    <btn button-caption="1/x"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="CE"></btn>
+                    <btn button-caption="C"></btn>
+                    <btn button-caption="DELETE"></btn>
+                    <btn button-caption="/"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="7"></btn>
+                    <btn button-caption="8"></btn>
+                    <btn button-caption="9"></btn>
+                    <btn button-caption="*"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="4"></btn>
+                    <btn button-caption="5"></btn>
+                    <btn button-caption="6"></btn>
+                    <btn button-caption="-"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="1"></btn>
+                    <btn button-caption="2"></btn>
+                    <btn button-caption="3"></btn>
+                    <btn button-caption="+"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="+/-"></btn>
+                    <btn button-caption="0"></btn>
+                    <btn button-caption="."></btn>
+                    <btn button-caption="="></btn>
+                </el-row>
+        
+            </template>
+            <template v-if="layout=='large'">
+                    
+                    <el-row>
+                        <btn button-caption="%"></btn>
+                        <btn button-caption="CE"></btn>
+                        <btn button-caption="C"></btn>
+                        <btn button-caption="DELETE"></btn>
+                        <btn button-caption="/"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="√"></btn>
+                        <btn button-caption="7"></btn>
+                        <btn button-caption="8"></btn>
+                        <btn button-caption="9"></btn>
+                        <btn button-caption="*"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="x^2"></btn>
+                        <btn button-caption="4"></btn>
+                        <btn button-caption="5"></btn>
+                        <btn button-caption="6"></btn>
+                        <btn button-caption="-"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="x^3"></btn>
+                        <btn button-caption="1"></btn>
+                        <btn button-caption="2"></btn>
+                        <btn button-caption="3"></btn>
+                        <btn button-caption="+"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="1/x"></btn>
+                        <btn button-caption="+/-"></btn>
+                        <btn button-caption="0"></btn>
+                        <btn button-caption="."></btn>
+                        <btn button-caption="="></btn>
+                    </el-row>
+            </template>
+        </div>
+    </div>
+</template>
+<template id="tpl_Scientific">
+        <div id="scientific" :class="[{medium:isMedium},{large:isLarge}]">
+             <screen-panel></screen-panel>
+             <div class="keys">
+                <template v-if="layout =='medium'">
+                    <el-row>
+                        <btn button-caption="%"></btn>
+                        <btn button-caption="√"></btn>
+                        <btn button-caption="x^2"></btn>
+                        <btn button-caption="1/x"></btn>
+                        <btn button-caption="Mod"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="↑"></btn>
+                        <btn button-caption="CE"></btn>
+                        <btn button-caption="C"></btn>
+                        <btn button-caption="DELETE"></btn>
+                        <btn button-caption="/"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="π"></btn>
+                        <btn button-caption="7"></btn>
+                        <btn button-caption="8"></btn>
+                        <btn button-caption="9"></btn>
+                        <btn button-caption="*"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="n!"></btn>
+                        <btn button-caption="4"></btn>
+                        <btn button-caption="5"></btn>
+                        <btn button-caption="6"></btn>
+                        <btn button-caption="-"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="+/-"></btn>
+                        <btn button-caption="1"></btn>
+                        <btn button-caption="2"></btn>
+                        <btn button-caption="3"></btn>
+                        <btn button-caption="+"></btn>
+                    </el-row>
+                    <el-row>
+                        <btn button-caption="("></btn>
+                        <btn button-caption=")"></btn>
+                        <btn button-caption="0"></btn>
+                        <btn button-caption="."></btn>
+                        <btn button-caption="="></btn>
+                    </el-row>
+            
+                </template>
+                <template v-if="layout=='large'">
+                        
+                        <el-row>
+                            <btn button-caption="%"></btn>
+                            <btn button-caption="CE"></btn>
+                            <btn button-caption="C"></btn>
+                            <btn button-caption="DELETE"></btn>
+                            <btn button-caption="/"></btn>
+                        </el-row>
+                        <el-row>
+                            <btn button-caption="√"></btn>
+                            <btn button-caption="7"></btn>
+                            <btn button-caption="8"></btn>
+                            <btn button-caption="9"></btn>
+                            <btn button-caption="*"></btn>
+                        </el-row>
+                        <el-row>
+                            <btn button-caption="x^2"></btn>
+                            <btn button-caption="4"></btn>
+                            <btn button-caption="5"></btn>
+                            <btn button-caption="6"></btn>
+                            <btn button-caption="-"></btn>
+                        </el-row>
+                        <el-row>
+                            <btn button-caption="x^3"></btn>
+                            <btn button-caption="1"></btn>
+                            <btn button-caption="2"></btn>
+                            <btn button-caption="3"></btn>
+                            <btn button-caption="+"></btn>
+                        </el-row>
+                        <el-row>
+                            <btn button-caption="1/x"></btn>
+                            <btn button-caption="+/-"></btn>
+                            <btn button-caption="0"></btn>
+                            <btn button-caption="."></btn>
+                            <btn button-caption="="></btn>
+                        </el-row>
+                </template>
+            </div>
+        </div>
+</template>
+    
 
 <script>
     var Event=new Vue();//事件绑定器，用于平行组件间通信
     Vue.component("standard",{
-        template:"#tpl_Standard"
+        template:"#tpl_Standard",
+        data(){
+            return {
+                screenWidth: document.body.clientWidth,//监听窗口变化
+                layout:"medium",
+                isMedium:true,
+                isLarge:false,
+            }
+        },
+    
+        mounted:function(){
+            const _self = this;
+            window.onresize=function temp(){
+                _self.screenWidth=document.body.clientWidth;
+                if(_self.screenWidth>=992){
+                    _self.layout="large";
+                    _self.isLarge=true;
+                    _self.isMedium=false;
+                }
+                else{
+                    _self.layout="medium";
+                    _self.isMedium=true;
+                    _self.isLarge=false;
+                }
+               
+            }
+        }
+    });
+    Vue.component("scientific",{
+        template:"#tpl_Scientific",
+        data(){
+            return {
+                screenWidth: document.body.clientWidth,//监听窗口变化
+                layout:"medium",
+                isMedium:true,
+                isLarge:false,
+            }
+        },
+    
+        mounted:function(){
+            const _self = this;
+            window.onresize=function temp(){
+                _self.screenWidth=document.body.clientWidth;
+                if(_self.screenWidth>=9920){
+                    _self.layout="large";
+                    _self.isLarge=true;
+                    _self.isMedium=false;
+                }
+                else{
+                    _self.layout="medium";
+                    _self.isMedium=true;
+                    _self.isLarge=false;
+                }
+               
+            }
+        }
     });
     Vue.component("btn",{
         props: ['buttonCaption'],
@@ -242,7 +460,7 @@
             path:'/scientific',
             component:{
                 template:`
-                <div>科学</div>
+               <scientific></scientific>
                 `
             }
         }
