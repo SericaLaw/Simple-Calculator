@@ -24,17 +24,27 @@
             padding: 0;
             margin: 0;
             overflow: hidden;
+            position:relative;
         }
-
-        .el-row.panel {
+        #main{
+            height: 90%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            position:absolute;
+            bottom: 0;
+        }
+        #main .el-row.panel {
             height: 25%;
         }
 
-       .el-row {
+       #main .el-row {
             height: 15%;
         }
     </style>
     <script src="app/js/vue.js"></script>
+    <script src="app/js/vue-router.js"></script>
 
     
     <!-- 引入样式 -->
@@ -46,41 +56,58 @@
 
 <body>
     <div id="app">
-       <screen-panel></screen-panel>
-        <el-row>
-                <btn button-caption="CE"></btn>
-                <btn button-caption="C"></btn>
-                <btn button-caption="DELETE"></btn>
-                <btn button-caption="/"></btn>
-        </el-row>
-        <el-row>
-                <btn button-caption="7"></btn>
-                <btn button-caption="8"></btn>
-                <btn button-caption="9"></btn>
-                <btn button-caption="*"></btn>
-        </el-row>
-        <el-row>
-                <btn button-caption="4"></btn>
-                <btn button-caption="5"></btn>
-                <btn button-caption="6"></btn>
-                <btn button-caption="-"></btn>
-        </el-row>
-        <el-row>
-                <btn button-caption="1"></btn>
-                <btn button-caption="2"></btn>
-                <btn button-caption="3"></btn>
-                <btn button-caption="+"></btn>
-        </el-row>
-        <el-row>
-                <btn button-caption="+/-"></btn>
-                <btn button-caption="0"></btn>
-                <btn button-caption="."></btn>
-                <btn button-caption="="></btn>
-        </el-row>
+          <div>
+          <router-link to="/">标准</router-link>
+            <router-link to="/scientific">科学</router-link>
+            <router-view></router-view>
+          </div>
+     
+            
+        
+      
     </div>
 </body>
+<template id="tpl_Standard">
+<div id="main">
+        <screen-panel></screen-panel>
+    <el-row>
+            <btn button-caption="CE"></btn>
+            <btn button-caption="C"></btn>
+            <btn button-caption="DELETE"></btn>
+            <btn button-caption="/"></btn>
+    </el-row>
+    <el-row>
+            <btn button-caption="7"></btn>
+            <btn button-caption="8"></btn>
+            <btn button-caption="9"></btn>
+            <btn button-caption="*"></btn>
+    </el-row>
+    <el-row>
+            <btn button-caption="4"></btn>
+            <btn button-caption="5"></btn>
+            <btn button-caption="6"></btn>
+            <btn button-caption="-"></btn>
+    </el-row>
+    <el-row>
+            <btn button-caption="1"></btn>
+            <btn button-caption="2"></btn>
+            <btn button-caption="3"></btn>
+            <btn button-caption="+"></btn>
+    </el-row>
+    <el-row>
+            <btn button-caption="+/-"></btn>
+            <btn button-caption="0"></btn>
+            <btn button-caption="."></btn>
+            <btn button-caption="="></btn>
+    </el-row>
+       </div>
+    </template>
+
 <script>
     var Event=new Vue();//事件绑定器，用于平行组件间通信
+    Vue.component("standard",{
+        template:"#tpl_Standard"
+    });
     Vue.component("btn",{
         props: ['buttonCaption'],
         template: `
@@ -108,7 +135,11 @@
             })
         }
         
-    })
+    });
+    Vue.filter("numFilter",function(val){
+        
+        return parseFloat(val);
+    });
     Vue.component("screen-panel",{
         template:`
         <el-row class="panel">
@@ -127,7 +158,7 @@
             return {
                 currentExpression:'',
                 numberToPush:'0',
-                dotted:false,
+               
                 needToRefresh:false
             }
         },
@@ -141,7 +172,8 @@
                     
                     me.needToRefresh=false;
                     }
-                    me.numberToPush=parseFloat(me.numberToPush+=data);
+                   me.numberToPush=parseFloat(me.numberToPush+=data);
+               
                 }
                 else if(data=="."){
                
@@ -158,12 +190,13 @@
                     me.currentExpression="";
                 }
                 else if(data=='CE'){
-                    me.numberToPush="0";
+                   me.numberToPush="0";
+                 me.numberToPush="";
                 }
                 else if(data=='+'||data=='-'||data=='*'||data=="/"){
 
                     if(me.numberToPush!=''){
-                        console.log(me.numberToPush);
+                       
                         me.currentExpression+=me.numberToPush+data;
                         me.numberToPush='';
                         Event.$emit("setDotStatus",true);
@@ -184,21 +217,46 @@
                     me.numberToPush=parseFloat(me.numberToPush);
                 }
                 else if(data=='='){
-                    me.currentExpression+=me.numberToPush;                  
-                    me.numberToPush=eval('('+me.currentExpression+')');
-                    me.needToRefresh=true;
                     console.log(me.numberToPush);
+                    me.currentExpression+=me.numberToPush;                  
+                    me.numberToPush=Math.round(eval('('+me.currentExpression+')')*100)/100;
+                    me.needToRefresh=true;
+                   
                     me.currentExpression='';
 
                     Event.$emit("setDotStatus",true);
                 }
             })
         }
-    })
+    });
+    var routes=[
+        {
+            path:'/',
+            component:{
+                template:`
+                <standard></standard>
+                `,
+            }  
+        },
+        {
+            path:'/scientific',
+            component:{
+                template:`
+                <div>科学</div>
+                `
+            }
+        }
+    ];
+    var router = new VueRouter({
+        routes:routes,
+    });
+
     var app = new Vue({
         el: "#app",
+        router:router,
+      
         
-    })
+    });
 </script>
 
 </html>
