@@ -1,5 +1,6 @@
 {
   "name": "simple-calculator",
+  "productName":"Calculator",
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
