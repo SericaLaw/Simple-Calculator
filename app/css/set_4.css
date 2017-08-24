@@ -686,7 +686,22 @@
 
 
 }
+#scientific.large .set_4_button4{
+  position: relative;
+  font-weight: 400;
+  text-align: center;
+  width: 16.6667%;
+  height: 100%;
+  float:left;
+  padding:0 25px;
+  line-height: 100%;
 
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+  color:#252b2d;
+}
 .set_4_button4 span{
   position: absolute;
   top:50%;

@@ -10,8 +10,8 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="app/css/bootstrap.min.css">
-    
-   
+
+
 
 
     <link rel="stylesheet" href="app/css/set_4.css">
@@ -24,77 +24,117 @@
             padding: 0;
             margin: 0;
             overflow: hidden;
-            position:relative;
+            position: relative;
         }
-        #standard,#scientific{
+
+        #standard,
+        #scientific {
             height: 90%;
             width: 100%;
             padding: 0;
             margin: 0;
             overflow: hidden;
-            position:absolute;
+            position: absolute;
             bottom: 0;
-           
         }
-        .keys{
-            animation:bounceIn  0.5s ease 0s 1 normal;
+
+        .keys {
+            animation: bounceIn 0.5s ease 0s 1 normal;
         }
+
         #standard.medium .el-row.panel,
-        #scientific.medium .el-row.panel {
+        #scientific .el-row.panel {
             height: 16%;
         }
-        
+
         #standard.medium .keys,
-        #scientific.medium .keys{
-            height:84%;
+        #scientific .keys {
+            height: 84%;
         }
-       #standard.medium .el-row,
-       #scientific.medium .el-row{
+
+        #standard.medium .el-row,
+        #scientific .el-row {
             height: 16.66667%;
         }
 
-        #standard.large .keys{
-            height:80%;
+        #standard.large .keys,
+        {
+            height: 80%;
         }
-        #standard.large .el-row.panel {
-            height:20%;
-        
+
+        #standard.large .el-row.panel,
+        {
+            height: 20%;
         }
-        #standard.large .el-row{
-            height:20%;
+
+        #standard.large .el-row,
+        {
+            height: 20%;
+        }
+        .el-menu-vertical-demo:not(.el-menu--collapse) {
+            width: 200px;
+            min-height: 100%;
+        }
+        .nav-menu{
+            position: fixed;
+            z-index: 10;
         }
     </style>
     <script src="app/js/vue.js"></script>
     <script src="app/js/vue-router.js"></script>
 
-    
+
     <!-- 引入样式 -->
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
-<!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
 </head>
 
 <body>
     <div id="app">
-          <div>
-          <router-link to="/">标准</router-link>
-            <router-link to="/scientific">科学</router-link>
+        <div class="nav-menu">
+
+            <el-menu default-active="1-4-1" class="el-menu-vertical-demo"  :collapse="isCollapse">
+                <div @click="navOnClick">
+                    <el-menu-item index="1">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">模式</span>
+                    </el-menu-item>
+                </div>
+                <template v-if="!isCollapse">
+                    <div @click="click1">
+                        <el-menu-item index="2">
+                            <i class="el-icon-menu"></i>
+                            <span slot="title"><router-link to="/">标准</router-link></span>
+                        </el-menu-item>
+                    </div>
+                    <div @click="click2">
+                        <el-menu-item index="3">
+                            <i class="el-icon-setting"></i>
+                            <span slot="title"><router-link to="/scientific">科学</span>
+                        </el-menu-item>
+                    </div>
+                </template>
+            </el-menu>
+
+</div>
+
+
             <router-view></router-view>
-          </div>
-     
-            
         
-      
+
+
+
     </div>
 </body>
 <template id="tpl_Standard">
     <div id="standard" :class="[{medium:isMedium},{large:isLarge}]">
-         <screen-panel></screen-panel>
-         <div class="keys">
+        <screen-panel></screen-panel>
+        <div class="keys">
             <template v-if="layout =='medium'">
-            
-            
+
+
                 <el-row>
                     <btn button-caption="%"></btn>
                     <btn button-caption="√"></btn>
@@ -131,235 +171,267 @@
                     <btn button-caption="."></btn>
                     <btn button-caption="="></btn>
                 </el-row>
-        
+
             </template>
             <template v-if="layout=='large'">
-                    
-                    <el-row>
-                        <btn button-caption="%"></btn>
-                        <btn button-caption="CE"></btn>
-                        <btn button-caption="C"></btn>
-                        <btn button-caption="DELETE"></btn>
-                        <btn button-caption="/"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="√"></btn>
-                        <btn button-caption="7"></btn>
-                        <btn button-caption="8"></btn>
-                        <btn button-caption="9"></btn>
-                        <btn button-caption="*"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="x^2"></btn>
-                        <btn button-caption="4"></btn>
-                        <btn button-caption="5"></btn>
-                        <btn button-caption="6"></btn>
-                        <btn button-caption="-"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="x^3"></btn>
-                        <btn button-caption="1"></btn>
-                        <btn button-caption="2"></btn>
-                        <btn button-caption="3"></btn>
-                        <btn button-caption="+"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="1/x"></btn>
-                        <btn button-caption="+/-"></btn>
-                        <btn button-caption="0"></btn>
-                        <btn button-caption="."></btn>
-                        <btn button-caption="="></btn>
-                    </el-row>
+
+                <el-row>
+                    <btn button-caption="%"></btn>
+                    <btn button-caption="CE"></btn>
+                    <btn button-caption="C"></btn>
+                    <btn button-caption="DELETE"></btn>
+                    <btn button-caption="/"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="√"></btn>
+                    <btn button-caption="7"></btn>
+                    <btn button-caption="8"></btn>
+                    <btn button-caption="9"></btn>
+                    <btn button-caption="*"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="x^2"></btn>
+                    <btn button-caption="4"></btn>
+                    <btn button-caption="5"></btn>
+                    <btn button-caption="6"></btn>
+                    <btn button-caption="-"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="x^3"></btn>
+                    <btn button-caption="1"></btn>
+                    <btn button-caption="2"></btn>
+                    <btn button-caption="3"></btn>
+                    <btn button-caption="+"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="1/x"></btn>
+                    <btn button-caption="+/-"></btn>
+                    <btn button-caption="0"></btn>
+                    <btn button-caption="."></btn>
+                    <btn button-caption="="></btn>
+                </el-row>
             </template>
         </div>
     </div>
 </template>
 <template id="tpl_Scientific">
-        <div id="scientific" :class="[{medium:isMedium},{large:isLarge}]">
-             <screen-panel></screen-panel>
-             <div class="keys">
-                <template v-if="layout =='medium'">
+    <div id="scientific" :class="[{medium:isMedium},{large:isLarge}]">
+        <screen-panel></screen-panel>
+        <div class="keys">
+            <template v-if="layout =='medium'">
+                <template v-if="!shifted">
                     <el-row>
-                        <btn button-caption="%"></btn>
+                        <btn button-caption="sin"></btn>
+                        <btn button-caption="tan"></btn>
                         <btn button-caption="√"></btn>
                         <btn button-caption="x^2"></btn>
                         <btn button-caption="1/x"></btn>
-                        <btn button-caption="Mod"></btn>
                     </el-row>
-                    <el-row>
-                        <btn button-caption="↑"></btn>
-                        <btn button-caption="CE"></btn>
-                        <btn button-caption="C"></btn>
-                        <btn button-caption="DELETE"></btn>
-                        <btn button-caption="/"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="π"></btn>
-                        <btn button-caption="7"></btn>
-                        <btn button-caption="8"></btn>
-                        <btn button-caption="9"></btn>
-                        <btn button-caption="*"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="n!"></btn>
-                        <btn button-caption="4"></btn>
-                        <btn button-caption="5"></btn>
-                        <btn button-caption="6"></btn>
-                        <btn button-caption="-"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="+/-"></btn>
-                        <btn button-caption="1"></btn>
-                        <btn button-caption="2"></btn>
-                        <btn button-caption="3"></btn>
-                        <btn button-caption="+"></btn>
-                    </el-row>
-                    <el-row>
-                        <btn button-caption="("></btn>
-                        <btn button-caption=")"></btn>
-                        <btn button-caption="0"></btn>
-                        <btn button-caption="."></btn>
-                        <btn button-caption="="></btn>
-                    </el-row>
-            
                 </template>
-                <template v-if="layout=='large'">
-                        
-                        <el-row>
-                            <btn button-caption="%"></btn>
-                            <btn button-caption="CE"></btn>
-                            <btn button-caption="C"></btn>
-                            <btn button-caption="DELETE"></btn>
-                            <btn button-caption="/"></btn>
-                        </el-row>
-                        <el-row>
-                            <btn button-caption="√"></btn>
-                            <btn button-caption="7"></btn>
-                            <btn button-caption="8"></btn>
-                            <btn button-caption="9"></btn>
-                            <btn button-caption="*"></btn>
-                        </el-row>
-                        <el-row>
-                            <btn button-caption="x^2"></btn>
-                            <btn button-caption="4"></btn>
-                            <btn button-caption="5"></btn>
-                            <btn button-caption="6"></btn>
-                            <btn button-caption="-"></btn>
-                        </el-row>
-                        <el-row>
-                            <btn button-caption="x^3"></btn>
-                            <btn button-caption="1"></btn>
-                            <btn button-caption="2"></btn>
-                            <btn button-caption="3"></btn>
-                            <btn button-caption="+"></btn>
-                        </el-row>
-                        <el-row>
-                            <btn button-caption="1/x"></btn>
-                            <btn button-caption="+/-"></btn>
-                            <btn button-caption="0"></btn>
-                            <btn button-caption="."></btn>
-                            <btn button-caption="="></btn>
-                        </el-row>
+                <template v-if="shifted">
+                    <el-row>
+                        <btn button-caption="cos"></btn>
+                        <btn button-caption="cot"></btn>
+                        <btn button-caption="log"></btn>
+                        <btn button-caption="x^3"></btn>
+                        <btn button-caption="10^x"></btn>
+                    </el-row>
                 </template>
-            </div>
+                <el-row>
+                    <btn button-caption="↑"></btn>
+                    <btn button-caption="CE"></btn>
+                    <btn button-caption="C"></btn>
+                    <btn button-caption="DELETE"></btn>
+                    <btn button-caption="/"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="π"></btn>
+                    <btn button-caption="7"></btn>
+                    <btn button-caption="8"></btn>
+                    <btn button-caption="9"></btn>
+                    <btn button-caption="*"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="n!"></btn>
+                    <btn button-caption="4"></btn>
+                    <btn button-caption="5"></btn>
+                    <btn button-caption="6"></btn>
+                    <btn button-caption="-"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="+/-"></btn>
+                    <btn button-caption="1"></btn>
+                    <btn button-caption="2"></btn>
+                    <btn button-caption="3"></btn>
+                    <btn button-caption="+"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="("></btn>
+                    <btn button-caption=")"></btn>
+                    <btn button-caption="0"></btn>
+                    <btn button-caption="."></btn>
+                    <btn button-caption="="></btn>
+                </el-row>
+            </template>
+            <template v-if="layout=='large'">
+                <el-row>
+                    <btn button-caption="√"></btn>
+                    <btn button-caption="x^2"></btn>
+                    <btn button-caption="x^3"></btn>
+                    <btn button-caption="1/x"></btn>
+                    <btn button-caption="ln"></btn>
+                    <btn button-caption="e^x"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="log"></btn>
+                    <btn button-caption="10^x"></btn>
+                    <btn button-caption="CE"></btn>
+                    <btn button-caption="C"></btn>
+                    <btn button-caption="DELETE"></btn>
+                    <btn button-caption="/"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="tan"></btn>
+                    <btn button-caption="π"></btn>
+                    <btn button-caption="7"></btn>
+                    <btn button-caption="8"></btn>
+                    <btn button-caption="9"></btn>
+                    <btn button-caption="*"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="cot"></btn>
+                    <btn button-caption="n!"></btn>
+                    <btn button-caption="4"></btn>
+                    <btn button-caption="5"></btn>
+                    <btn button-caption="6"></btn>
+                    <btn button-caption="-"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="sin"></btn>
+                    <btn button-caption="cos"></btn>
+                    <btn button-caption="1"></btn>
+                    <btn button-caption="2"></btn>
+                    <btn button-caption="3"></btn>
+                    <btn button-caption="+"></btn>
+                </el-row>
+                <el-row>
+                    <btn button-caption="+/-"></btn>
+                    <btn button-caption="("></btn>
+                    <btn button-caption=")"></btn>
+                    <btn button-caption="0"></btn>
+                    <btn button-caption="."></btn>
+                    <btn button-caption="="></btn>
+                </el-row>
+            </template>
         </div>
+    </div>
 </template>
-    
+
 
 <script>
-    var Event=new Vue();//事件绑定器，用于平行组件间通信
-    Vue.component("standard",{
-        template:"#tpl_Standard",
-        data(){
+    var Event = new Vue(); //事件绑定器，用于平行组件间通信
+    Vue.component("standard", {
+        template: "#tpl_Standard",
+        data() {
             return {
-                screenWidth: document.body.clientWidth,//监听窗口变化
-                layout:"medium",
-                isMedium:true,
-                isLarge:false,
+                screenWidth: document.body.clientWidth, //监听窗口变化
+                layout: "medium",
+                isMedium: true,
+                isLarge: false,
+
             }
         },
-    
-        mounted:function(){
+
+        mounted: function () {
             const _self = this;
-            window.onresize=function temp(){
-                _self.screenWidth=document.body.clientWidth;
-                if(_self.screenWidth>=992){
-                    _self.layout="large";
-                    _self.isLarge=true;
-                    _self.isMedium=false;
+            window.onresize = function temp() {
+                _self.screenWidth = document.body.clientWidth;
+                if (_self.screenWidth >= 992) {
+                    _self.layout = "large";
+                    _self.isLarge = true;
+                    _self.isMedium = false;
+                } else {
+                    _self.layout = "medium";
+                    _self.isMedium = true;
+                    _self.isLarge = false;
                 }
-                else{
-                    _self.layout="medium";
-                    _self.isMedium=true;
-                    _self.isLarge=false;
-                }
-               
+
             }
         }
     });
-    Vue.component("scientific",{
-        template:"#tpl_Scientific",
-        data(){
+    Vue.component("scientific", {
+        template: "#tpl_Scientific",
+        data() {
             return {
-                screenWidth: document.body.clientWidth,//监听窗口变化
-                layout:"medium",
-                isMedium:true,
-                isLarge:false,
+                screenWidth: document.body.clientWidth, //监听窗口变化
+                layout: "medium",
+                isMedium: true,
+                isLarge: false,
+                shifted: false,
             }
         },
-    
-        mounted:function(){
+
+
+        mounted: function () {
             const _self = this;
-            window.onresize=function temp(){
-                _self.screenWidth=document.body.clientWidth;
-                if(_self.screenWidth>=9920){
-                    _self.layout="large";
-                    _self.isLarge=true;
-                    _self.isMedium=false;
+            window.onresize = function temp() {
+                _self.screenWidth = document.body.clientWidth;
+                if (_self.screenWidth >= 992) {
+                    _self.layout = "large";
+                    _self.isLarge = true;
+                    _self.isMedium = false;
+                } else {
+                    _self.layout = "medium";
+                    _self.isMedium = true;
+                    _self.isLarge = false;
                 }
-                else{
-                    _self.layout="medium";
-                    _self.isMedium=true;
-                    _self.isLarge=false;
-                }
-               
+
             }
+            Event.$on('shift', function () {
+                _self.shifted = !_self.shifted;
+            })
         }
     });
-    Vue.component("btn",{
+    Vue.component("btn", {
         props: ['buttonCaption'],
         template: `
             <div @click="btnOnClick" class="set_4_button4 raised hoverable" >
                 <div class="anim"></div><span>{{buttonCaption}}</span>
             </div>`,
-        data:function(){
-            return{
-                allowed:true
+        data: function () {
+            return {
+                allowed: true
             }
         },
-        methods:{
-            btnOnClick:function(){
-                if(this.allowed){
-                    Event.$emit('pushKey',this.buttonCaption)//触发事件
+        methods: {
+            btnOnClick: function () {
+                if (this.buttonCaption == "↑") {
+                    Event.$emit('shift', this.buttonCaption);
+
+                    return;
                 }
+                if (this.allowed) {
+                    Event.$emit('pushKey', this.buttonCaption) //触发事件
+                }
+
             }
         },
-        mounted:function(){
-            var me=this;
-            Event.$on("setDotStatus",function(data){
-                if(me.buttonCaption=='.'){
-                    me.allowed=data;
+        mounted: function () {
+            var me = this;
+            Event.$on("setDotStatus", function (data) {
+                if (me.buttonCaption == '.') {
+                    me.allowed = data;
                 }
             })
         }
-        
+
     });
-    Vue.filter("numFilter",function(val){
-        
+    Vue.filter("numFilter", function (val) {
+
         return parseFloat(val);
     });
-    Vue.component("screen-panel",{
-        template:`
+    Vue.component("screen-panel", {
+        template: `
         <el-row class="panel">
             <div style="height:50%;text-align:right">
                <div style="font-size:2em">
@@ -372,108 +444,236 @@
                 </div>
              </div>
         </el-row>`,
-        data:function(){
+        data: function () {
             return {
-                currentExpression:'',
-                numberToPush:'0',
-               
-                needToRefresh:false
+                currentExpression: '',
+                numberToPush: '0',
+
+                needToRefresh: false
             }
         },
-        mounted:function(){
-            var me=this;
-            Event.$on("pushKey",function(data){//监听事件
+        mounted: function () {
+            var me = this;
+            Event.$on("pushKey", function (data) { //监听事件
 
-                if(parseInt(data)||data=='0'){
-                    if(me.needToRefresh){
-                    me.numberToPush='';
-                    
-                    me.needToRefresh=false;
-                    }
-                   me.numberToPush=parseFloat(me.numberToPush+=data);
-               
-                }
-                else if(data=="."){
-               
-                        me.numberToPush+=data;
-                        Event.$emit("setDotStatus",false);
-                  
-                   
-                }
-                else if(data=="DELETE"){
-                    me.numberToPush=me.numberToPush.slice(0,-1);
-                    
-                }
-                else if (data=='C'){
-                    me.currentExpression="";
-                }
-                else if(data=='CE'){
-                   me.numberToPush="0";
-                 me.numberToPush="";
-                }
-                else if(data=='+'||data=='-'||data=='*'||data=="/"){
+                if (parseInt(data) || data == '0') {
+                    if (me.needToRefresh) {
+                        me.numberToPush = '';
 
-                    if(me.numberToPush!=''){
-                       
-                        me.currentExpression+=me.numberToPush+data;
-                        me.numberToPush='';
-                        Event.$emit("setDotStatus",true);
+                        me.needToRefresh = false;
                     }
-                    else{
-                        me.currentExpression=me.currentExpression.slice(0,-1)+data;
+                    me.numberToPush = parseFloat(me.numberToPush += data);
+
+                } else if (data == ".") {
+
+                    me.numberToPush += data;
+                    Event.$emit("setDotStatus", false);
+
+
+                } else if (data == "DELETE") {
+                    me.numberToPush = me.numberToPush.slice(0, -1);
+
+                } else if (data == 'C') {
+                    me.currentExpression = "";
+                } else if (data == 'CE') {
+                    me.numberToPush = "0";
+                    me.numberToPush = "";
+                } else if (data == '+' || data == '-' || data == '*' || data == "/") {
+
+                    if (me.numberToPush != '') {
+
+                        me.currentExpression += me.numberToPush + data;
+                        me.numberToPush = '';
+                        Event.$emit("setDotStatus", true);
+                    } else {
+                        me.currentExpression = me.currentExpression.slice(0, -1) + data;
                     }
-                }
-                else if(data=='+/-'){
-                    if(!me.switched){
-                        me.numberToPush='-'+me.numberToPush;
-                           
+                } else if (data == '+/-') {
+                    if (!me.switched) {
+                        me.numberToPush = '-' + me.numberToPush;
+
+                    } else {
+                        me.numberToPush = me.numberToPush.slice(1);
                     }
-                    else{
-                        me.numberToPush=me.numberToPush.slice(1);                       
-                    }
-                    me.switched=!me.switched;
-                    me.numberToPush=parseFloat(me.numberToPush);
-                }
-                else if(data=='='){
+                    me.switched = !me.switched;
+                    me.numberToPush = parseFloat(me.numberToPush);
+                } else if (data == '=') {
                     console.log(me.numberToPush);
-                    me.currentExpression+=me.numberToPush;                  
-                    me.numberToPush=Math.round(eval('('+me.currentExpression+')')*100)/100;
-                    me.needToRefresh=true;
-                   
-                    me.currentExpression='';
+                    me.currentExpression += me.numberToPush;
+                    me.numberToPush = Math.round(eval('(' + me.currentExpression + ')') * 100) /
+                        100;
+                    me.needToRefresh = true;
 
-                    Event.$emit("setDotStatus",true);
+                    me.currentExpression = '';
+
+                    Event.$emit("setDotStatus", true);
                 }
             })
         }
     });
-    var routes=[
-        {
-            path:'/',
-            component:{
-                template:`
-                <standard></standard>
+    var routes = [{
+            path: '/',
+            component: {
+                template: `
+             <standard></standard>
                 `,
-            }  
+            }
         },
         {
-            path:'/scientific',
-            component:{
-                template:`
+            path: '/scientific',
+            component: {
+                template: `
                <scientific></scientific>
                 `
             }
-        }
+        },
+        /*   {
+            path:'/menu',
+            component:{
+                template:`
+              
+                <el-menu  default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+                 <div @click="navOnClick">
+                        <el-menu-item index="1">
+                          <i class="el-icon-menu"></i>
+                          <span slot="title">模式</span>
+                        </el-menu-item>
+                     </div>   
+                     <template v-if="!isCollapse">
+                     <div @click="click1">
+                        <el-menu-item index="2" >
+                          <i class="el-icon-menu"></i>
+                          <span slot="title" > 标准</span>
+                        </el-menu-item>
+                        </div>
+                        <div @click="click2">
+                            <el-menu-item index="3">
+                                <i class="el-icon-setting"></i>
+                                <span slot="title">科学</span>
+                            </el-menu-item>
+                            </div>
+                        </template>
+                      </el-menu>
+                      
+  
+                      
+                `,
+                data:function(){
+                    return {
+                        isCollapse: true
+                    };
+                },
+                methods: {
+                    navOnClick(){
+                        this.isCollapse=!this.isCollapse;
+                    },
+                    onEnter(){
+                        this.isCollapse= false;
+                    },
+                    onOut(){
+                        this.isCollapse= true;
+                    },
+                    handleOpen(key, keyPath) {
+                        console.log(1);
+                        console.log(key, keyPath);
+                    },
+                    handleClose(key, keyPath) {
+                        console.log(key, keyPath);
+                    },
+                    click1(){
+                        console.log("Hi1");
+                        Event.$emit("switchRoute",'/');
+                    },
+                    click2(){
+                        console.log("Hi2");
+                        Event.$emit("switchRoute",'/scientific');
+                    }
+                }
+
+            }
+        }*/
+        /*{ <div v-on="{mouseenter:onEnter,mouseleave:onOut}">
+            path:'/menu',
+            component:{
+                template:`
+                <el-row class="tac">
+                        <el-col :span="8">
+                         <div v-on="{mouseenter:onEnter,mouseleave:onOut}">
+                          <el-menu  default-active="2" class="el-menu-vertical-demo"  @open="handleOpen" @close="handleClose" mode="vertical" :collapse="isCollapse">
+                            <el-submenu index="1">
+                              <template slot="title"><i class="el-icon-menu"></i>导航一</template>
+                             
+                                
+                            
+            
+                            </el-submenu>
+                            <el-submenu index="2">
+                              <template slot="title"><i class="el-icon-menu"></i>导航一</template>
+                             
+                                
+                            
+            
+                            </el-submenu>
+                            
+                          </el-menu>
+                          </div>
+                        </el-col>
+                        
+                      </el-row>
+
+                `,
+                data:function(){
+                    return {
+                        isCollapse: true
+                    };
+                },
+                methods: {
+                    onEnter(){
+                        this.isCollapse= false;
+                    },
+                    onOut(){
+                        this.isCollapse= true;
+                    },
+                    handleOpen(key, keyPath) {
+                        console.log(1);
+                        console.log(key, keyPath);
+                    },
+                    handleClose(key, keyPath) {
+                        console.log(key, keyPath);
+                    }
+                }
+
+            }
+        }*/
     ];
     var router = new VueRouter({
-        routes:routes,
+        routes: routes,
     });
 
     var app = new Vue({
         el: "#app",
-        router:router,
-      
-        
+        router: router,
+        data:{
+         isCollapse: true           
+        },
+        methods: {
+            navOnClick(){
+                this.isCollapse=!this.isCollapse;
+            },
+            
+            click1(){
+                console.log("Hi1");
+                this.isCollapse=true;
+                this.$router.push('/');
+            },
+            click2(){
+                console.log("Hi2");
+                this.isCollapse=true;
+                this.$router.push('/scientific')
+            }
+        }
+
+
     });
 </script>
 
