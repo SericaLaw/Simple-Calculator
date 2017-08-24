@@ -8,13 +8,20 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Simple Calculator</title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="app/css/bootstrap.min.css">
-
-
 
 
     <link rel="stylesheet" href="app/css/set_4.css">
+    <link rel="stylesheet" href="app/css/font-awesome.min.css">
+
+    <script src="app/js/vue.js"></script>
+    <script src="app/js/vue-router.js"></script>
+
+    
+  
+    <link type="text/css" rel="stylesheet" href="app/css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="app/css/animate.css" media="screen,projection" />
+    <script type="text/javascript" src="app/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="app/js/materialize.js"></script>
     <style>
         html,
         body,
@@ -29,7 +36,7 @@
 
         #standard,
         #scientific {
-            height: 90%;
+            height: 95%;
             width: 100%;
             padding: 0;
             margin: 0;
@@ -38,94 +45,91 @@
             bottom: 0;
         }
 
+        .row {
+            margin: 0;
+        }
+
         .keys {
             animation: bounceIn 0.5s ease 0s 1 normal;
         }
 
-        #standard.medium .el-row.panel,
-        #scientific .el-row.panel {
-            height: 16%;
+        .panel{
+            position:relative;
+        }
+  
+
+      
+        .panel {
+            height: 20%;
         }
 
-        #standard.medium .keys,
-        #scientific .keys {
-            height: 84%;
-        }
-
-        #standard.medium .el-row,
-        #scientific .el-row {
-            height: 16.66667%;
-        }
-
-        #standard.large .keys,
-        {
+    .keys {
             height: 80%;
         }
 
-        #standard.large .el-row.panel,
-        {
+  
+        #standard.medium .row,
+        #scientific .row {
+            height: 16.66667%;
+        }
+
+        #standard.large .row {
             height: 20%;
         }
 
-        #standard.large .el-row,
-        {
-            height: 20%;
+
+        #standard.medium .fluent {
+            float: left;
+            width: 25%;
+            height: 100%;
+            position: relative;
         }
-        .el-menu-vertical-demo:not(.el-menu--collapse) {
-            width: 200px;
-            min-height: 100%;
+
+        #standard.large .fluent,
+        #scientific.medium .fluent {
+            float: left;
+            width: 20%;
+            height: 100%;
+            position: relative;
         }
-        .nav-menu{
-            position: fixed;
-            z-index: 10;
+
+        #scientific.large .fluent {
+            float: left;
+            width: 16.66667%;
+            height: 100%;
+            position: relative;
+        }
+
+        .fluent span {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 20px;
+        }
+
+        #navicon {
+            font-size: 30px;
+            color: gray;
         }
     </style>
-    <script src="app/js/vue.js"></script>
-    <script src="app/js/vue-router.js"></script>
-
-
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
-    <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
 </head>
 
 <body>
     <div id="app">
-        <div class="nav-menu">
-
-            <el-menu default-active="1-4-1" class="el-menu-vertical-demo"  :collapse="isCollapse">
-                <div @click="navOnClick">
-                    <el-menu-item index="1">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">模式</span>
-                    </el-menu-item>
-                </div>
-                <template v-if="!isCollapse">
-                    <div @click="click1">
-                        <el-menu-item index="2">
-                            <i class="el-icon-menu"></i>
-                            <span slot="title"><router-link to="/">标准</router-link></span>
-                        </el-menu-item>
-                    </div>
-                    <div @click="click2">
-                        <el-menu-item index="3">
-                            <i class="el-icon-setting"></i>
-                            <span slot="title"><router-link to="/scientific">科学</span>
-                        </el-menu-item>
-                    </div>
-                </template>
-            </el-menu>
-
-</div>
-
-
-            <router-view></router-view>
-        
-
-
-
+        <ul id="slide-out" class="side-nav">
+            <router-link to="/">
+                <li><a class="waves-effect" href="#!">标准</a></li>
+            </router-link>
+            <router-link to="/scientific">
+                <li><a class="waves-effect" href="#!">科学</a></li>
+            </router-link>
+        </ul>
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-navicon fa" style="color:gray;font-size:30px;">计算器</i></a>
+        <router-view></router-view>
     </div>
 </body>
 <template id="tpl_Standard">
@@ -135,81 +139,81 @@
             <template v-if="layout =='medium'">
 
 
-                <el-row>
+                <div class="row">
                     <btn button-caption="%"></btn>
                     <btn button-caption="√"></btn>
                     <btn button-caption="x^2"></btn>
                     <btn button-caption="1/x"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="CE"></btn>
                     <btn button-caption="C"></btn>
                     <btn button-caption="DELETE"></btn>
                     <btn button-caption="/"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="7"></btn>
                     <btn button-caption="8"></btn>
                     <btn button-caption="9"></btn>
                     <btn button-caption="*"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="4"></btn>
                     <btn button-caption="5"></btn>
                     <btn button-caption="6"></btn>
                     <btn button-caption="-"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="1"></btn>
                     <btn button-caption="2"></btn>
                     <btn button-caption="3"></btn>
                     <btn button-caption="+"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="+/-"></btn>
                     <btn button-caption="0"></btn>
                     <btn button-caption="."></btn>
                     <btn button-caption="="></btn>
-                </el-row>
+                </div>
 
             </template>
             <template v-if="layout=='large'">
 
-                <el-row>
+                <div class="row">
                     <btn button-caption="%"></btn>
                     <btn button-caption="CE"></btn>
                     <btn button-caption="C"></btn>
                     <btn button-caption="DELETE"></btn>
                     <btn button-caption="/"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="√"></btn>
                     <btn button-caption="7"></btn>
                     <btn button-caption="8"></btn>
                     <btn button-caption="9"></btn>
                     <btn button-caption="*"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="x^2"></btn>
                     <btn button-caption="4"></btn>
                     <btn button-caption="5"></btn>
                     <btn button-caption="6"></btn>
                     <btn button-caption="-"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="x^3"></btn>
                     <btn button-caption="1"></btn>
                     <btn button-caption="2"></btn>
                     <btn button-caption="3"></btn>
                     <btn button-caption="+"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="1/x"></btn>
                     <btn button-caption="+/-"></btn>
                     <btn button-caption="0"></btn>
                     <btn button-caption="."></btn>
                     <btn button-caption="="></btn>
-                </el-row>
+                </div>
             </template>
         </div>
     </div>
@@ -220,108 +224,108 @@
         <div class="keys">
             <template v-if="layout =='medium'">
                 <template v-if="!shifted">
-                    <el-row>
+                    <div class="row">
                         <btn button-caption="sin"></btn>
                         <btn button-caption="tan"></btn>
                         <btn button-caption="√"></btn>
                         <btn button-caption="x^2"></btn>
                         <btn button-caption="1/x"></btn>
-                    </el-row>
+                    </div>
                 </template>
                 <template v-if="shifted">
-                    <el-row>
+                    <div class="row">
                         <btn button-caption="cos"></btn>
                         <btn button-caption="cot"></btn>
                         <btn button-caption="log"></btn>
                         <btn button-caption="x^3"></btn>
                         <btn button-caption="10^x"></btn>
-                    </el-row>
+                    </div>
                 </template>
-                <el-row>
+                <div class="row">
                     <btn button-caption="↑"></btn>
                     <btn button-caption="CE"></btn>
                     <btn button-caption="C"></btn>
                     <btn button-caption="DELETE"></btn>
                     <btn button-caption="/"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="π"></btn>
                     <btn button-caption="7"></btn>
                     <btn button-caption="8"></btn>
                     <btn button-caption="9"></btn>
                     <btn button-caption="*"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="n!"></btn>
                     <btn button-caption="4"></btn>
                     <btn button-caption="5"></btn>
                     <btn button-caption="6"></btn>
                     <btn button-caption="-"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="+/-"></btn>
                     <btn button-caption="1"></btn>
                     <btn button-caption="2"></btn>
                     <btn button-caption="3"></btn>
                     <btn button-caption="+"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="("></btn>
                     <btn button-caption=")"></btn>
                     <btn button-caption="0"></btn>
                     <btn button-caption="."></btn>
                     <btn button-caption="="></btn>
-                </el-row>
+                </div>
             </template>
             <template v-if="layout=='large'">
-                <el-row>
+                <div class="row">
                     <btn button-caption="√"></btn>
                     <btn button-caption="x^2"></btn>
                     <btn button-caption="x^3"></btn>
                     <btn button-caption="1/x"></btn>
                     <btn button-caption="ln"></btn>
                     <btn button-caption="e^x"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="log"></btn>
                     <btn button-caption="10^x"></btn>
                     <btn button-caption="CE"></btn>
                     <btn button-caption="C"></btn>
                     <btn button-caption="DELETE"></btn>
                     <btn button-caption="/"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="tan"></btn>
                     <btn button-caption="π"></btn>
                     <btn button-caption="7"></btn>
                     <btn button-caption="8"></btn>
                     <btn button-caption="9"></btn>
                     <btn button-caption="*"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="cot"></btn>
                     <btn button-caption="n!"></btn>
                     <btn button-caption="4"></btn>
                     <btn button-caption="5"></btn>
                     <btn button-caption="6"></btn>
                     <btn button-caption="-"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="sin"></btn>
                     <btn button-caption="cos"></btn>
                     <btn button-caption="1"></btn>
                     <btn button-caption="2"></btn>
                     <btn button-caption="3"></btn>
                     <btn button-caption="+"></btn>
-                </el-row>
-                <el-row>
+                </div>
+                <div class="row">
                     <btn button-caption="+/-"></btn>
                     <btn button-caption="("></btn>
                     <btn button-caption=")"></btn>
                     <btn button-caption="0"></btn>
                     <btn button-caption="."></btn>
                     <btn button-caption="="></btn>
-                </el-row>
+                </div>
             </template>
         </div>
     </div>
@@ -329,6 +333,15 @@
 
 
 <script>
+    $(function () {
+        $('.button-collapse').sideNav({
+            menuWidth: 300,
+            edge: 'left',
+            closeOnClick: true,
+        });
+    })
+
+
     var Event = new Vue(); //事件绑定器，用于平行组件间通信
     Vue.component("standard", {
         template: "#tpl_Standard",
@@ -395,8 +408,8 @@
     Vue.component("btn", {
         props: ['buttonCaption'],
         template: `
-            <div @click="btnOnClick" class="set_4_button4 raised hoverable" >
-                <div class="anim"></div><span>{{buttonCaption}}</span>
+            <div @click="btnOnClick" class="waves-effect waves-light btn-large fluent" >
+                <span>{{buttonCaption}}</span>
             </div>`,
         data: function () {
             return {
@@ -432,18 +445,18 @@
     });
     Vue.component("screen-panel", {
         template: `
-        <el-row class="panel">
-            <div style="height:50%;text-align:right">
+        <div class="panel">
+            <div class="row" style="text-align:right;margin-bottom:1em">
                <div style="font-size:2em">
                  {{currentExpression}}
                 </div>
             </div>
-            <div style="height:50%;text-align:right;">
+            <div class="row" style="text-align:right;">
                 <div style="font-size:5em;">
                     {{numberToPush}}
                 </div>
              </div>
-        </el-row>`,
+        </div>`,
         data: function () {
             return {
                 currentExpression: '',
@@ -527,124 +540,6 @@
                 `
             }
         },
-        /*   {
-            path:'/menu',
-            component:{
-                template:`
-              
-                <el-menu  default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-                 <div @click="navOnClick">
-                        <el-menu-item index="1">
-                          <i class="el-icon-menu"></i>
-                          <span slot="title">模式</span>
-                        </el-menu-item>
-                     </div>   
-                     <template v-if="!isCollapse">
-                     <div @click="click1">
-                        <el-menu-item index="2" >
-                          <i class="el-icon-menu"></i>
-                          <span slot="title" > 标准</span>
-                        </el-menu-item>
-                        </div>
-                        <div @click="click2">
-                            <el-menu-item index="3">
-                                <i class="el-icon-setting"></i>
-                                <span slot="title">科学</span>
-                            </el-menu-item>
-                            </div>
-                        </template>
-                      </el-menu>
-                      
-  
-                      
-                `,
-                data:function(){
-                    return {
-                        isCollapse: true
-                    };
-                },
-                methods: {
-                    navOnClick(){
-                        this.isCollapse=!this.isCollapse;
-                    },
-                    onEnter(){
-                        this.isCollapse= false;
-                    },
-                    onOut(){
-                        this.isCollapse= true;
-                    },
-                    handleOpen(key, keyPath) {
-                        console.log(1);
-                        console.log(key, keyPath);
-                    },
-                    handleClose(key, keyPath) {
-                        console.log(key, keyPath);
-                    },
-                    click1(){
-                        console.log("Hi1");
-                        Event.$emit("switchRoute",'/');
-                    },
-                    click2(){
-                        console.log("Hi2");
-                        Event.$emit("switchRoute",'/scientific');
-                    }
-                }
-
-            }
-        }*/
-        /*{ <div v-on="{mouseenter:onEnter,mouseleave:onOut}">
-            path:'/menu',
-            component:{
-                template:`
-                <el-row class="tac">
-                        <el-col :span="8">
-                         <div v-on="{mouseenter:onEnter,mouseleave:onOut}">
-                          <el-menu  default-active="2" class="el-menu-vertical-demo"  @open="handleOpen" @close="handleClose" mode="vertical" :collapse="isCollapse">
-                            <el-submenu index="1">
-                              <template slot="title"><i class="el-icon-menu"></i>导航一</template>
-                             
-                                
-                            
-            
-                            </el-submenu>
-                            <el-submenu index="2">
-                              <template slot="title"><i class="el-icon-menu"></i>导航一</template>
-                             
-                                
-                            
-            
-                            </el-submenu>
-                            
-                          </el-menu>
-                          </div>
-                        </el-col>
-                        
-                      </el-row>
-
-                `,
-                data:function(){
-                    return {
-                        isCollapse: true
-                    };
-                },
-                methods: {
-                    onEnter(){
-                        this.isCollapse= false;
-                    },
-                    onOut(){
-                        this.isCollapse= true;
-                    },
-                    handleOpen(key, keyPath) {
-                        console.log(1);
-                        console.log(key, keyPath);
-                    },
-                    handleClose(key, keyPath) {
-                        console.log(key, keyPath);
-                    }
-                }
-
-            }
-        }*/
     ];
     var router = new VueRouter({
         routes: routes,
@@ -653,24 +548,13 @@
     var app = new Vue({
         el: "#app",
         router: router,
-        data:{
-         isCollapse: true           
+        data: {
+            isCollapse: true
         },
         methods: {
-            navOnClick(){
-                this.isCollapse=!this.isCollapse;
-            },
-            
-            click1(){
-                console.log("Hi1");
-                this.isCollapse=true;
-                this.$router.push('/');
-            },
-            click2(){
-                console.log("Hi2");
-                this.isCollapse=true;
-                this.$router.push('/scientific')
-            }
+
+
+
         }
 
 
