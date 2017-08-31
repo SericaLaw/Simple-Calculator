@@ -3,24 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Simple Calculator</title>
-
-
-
-    <link rel="stylesheet" href="app/css/set_4.css">
     <link rel="stylesheet" href="app/css/font-awesome.min.css">
-
+   <!-- <script type="text/javascript" src="app/js/jquery-3.2.1.min.js"></script>-->
+  <script> window.$ = window.jQuery = require('app/js/jquery-3.2.1.min.js');</script>
     <script src="app/js/vue.js"></script>
-    <script src="app/js/vue-router.js"></script>
-
-    
-  
+    <script src="app/js/vue-router.js"></script>  
     <link type="text/css" rel="stylesheet" href="app/css/materialize.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="app/css/animate.css" media="screen,projection" />
-    <script type="text/javascript" src="app/js/jquery-3.2.1.min.js"></script>
+   
     <script type="text/javascript" src="app/js/materialize.js"></script>
     <style>
         html,
@@ -446,7 +437,7 @@
     Vue.component("screen-panel", {
         template: `
         <div class="panel">
-            <div class="row" style="text-align:right;margin-bottom:1em">
+            <div class="row" style="text-align:right;">
                <div style="font-size:2em">
                  {{currentExpression}}
                 </div>
@@ -461,7 +452,7 @@
             return {
                 currentExpression: '',
                 numberToPush: '0',
-
+                switched:false,
                 needToRefresh: false
             }
         },
@@ -471,7 +462,7 @@
 
                 if (parseInt(data) || data == '0') {
                     if (me.needToRefresh) {
-                        me.numberToPush = '';
+                        me.numberToPush = '0';
 
                         me.needToRefresh = false;
                     }
@@ -498,9 +489,9 @@
                         me.currentExpression += me.numberToPush + data;
                         me.numberToPush = '';
                         Event.$emit("setDotStatus", true);
-                    } else {
+                    } /*else {
                         me.currentExpression = me.currentExpression.slice(0, -1) + data;
-                    }
+                    }*/
                 } else if (data == '+/-') {
                     if (!me.switched) {
                         me.numberToPush = '-' + me.numberToPush;
