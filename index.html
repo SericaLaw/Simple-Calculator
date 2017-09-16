@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <title>Simple Calculator</title>
     <link rel="stylesheet" href="app/css/font-awesome.min.css">
-   <!-- <script type="text/javascript" src="app/js/jquery-3.2.1.min.js"></script>-->
-  <script> window.$ = window.jQuery = require('app/js/jquery-3.2.1.min.js');</script>
+<script>
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+</script>
+   <script type="text/javascript" src="app/js/jquery-3.2.1.min.js"></script>
     <script src="app/js/vue.js"></script>
     <script src="app/js/vue-router.js"></script>  
     <link type="text/css" rel="stylesheet" href="app/css/materialize.css" media="screen,projection" />

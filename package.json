@@ -1,13 +1,17 @@
 {
-  "name": "simple-calculator",
-  "productName":"Calculator",
-  "version": "0.1.0",
-  "main": "main.js",
+  "name": "Calculator",
+  "version": "1.0.0",
+  "description": "",
+    "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "electron .",
+      "packager": "electron-packager . --platform=win32 --arch=ia32  --version 1.0.0 --overwrite  --ignore=node_modules --prune --asar --download.mirror=https://npm.taobao.org/mirrors/electron/"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "electron": "^1.7.5",
-    "electron-packager": "^9.0.0"
+    "electron": "^1.7.6"
   }
 }
