@@ -10,7 +10,7 @@ As its name, it is very much simple, not functioning at all at this moment.
 
 To run the calculator as a Desktop App (in stead of a WebApp),  you can run it with `npm start`.
 
-The app is now packed by [electron-packager](https://github.com/electron-userland/electron-packager) and pre-released in a binary form.
+The app is now packed by [electron-packager](https://github.com/electron-userland/electron-packager) and pre-released in [a binary form](https://github.com/AlbertSerica/Simple-Calculator/releases/tag/1.0.0-alpha).
 
 You can choose to have a look at the general view of the app directly  in your browsers by opening the file `index.html`.
 
